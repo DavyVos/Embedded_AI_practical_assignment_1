@@ -9,7 +9,8 @@ import matplotlib.pyplot as plt
 
 num_classes = 10
 learning_rate = 0.01
-batch_size = 128
+batch_size = 1
+epoch = 1
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
@@ -43,17 +44,17 @@ optimizer.learning_rate.assign(learning_rate)
 
 model.compile(loss=keras.losses.categorical_crossentropy, optimizer=optimizer)
 
-hist = model.fit(x_train, y_train, batch_size=batch_size, epochs=20, verbose=1, validation_data=(x_test, y_test))
+hist = model.fit(x_train, y_train, batch_size=batch_size, epochs=epoch, verbose=1, validation_data=(x_test, y_test))
 
 score = model.evaluate(x_test, y_test)
 
 print()
 print('Test Loss= ', score)
-plt.plot(hist.history['loss'])
-plt.plot(hist.history['val_loss'])
+plt.plot(hist.history['loss'],  label="Train")
+plt.plot(hist.history['val_loss'],  label="Test")
 plt.title('Model Loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
-plt.legend(['Train, Test'], loc=0)
+plt.legend(loc=0)
 
 plt.show()
